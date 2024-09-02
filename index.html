@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RGB Color Matching Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        #targetColor, #userColor {
+            width: 100px;
+            height: 100px;
+            margin: 10px auto;
+        }
+        .slider {
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <h1>RGB Color Matching Game</h1>
+    <div id="targetColor"></div>
+    <p>Match this color!</p>
+    <div>
+        <input type="range" id="redSlider" class="slider" min="0" max="255">
+        <label for="redSlider">Red</label>
+    </div>
+    <div>
+        <input type="range" id="greenSlider" class="slider" min="0" max="255">
+        <label for="greenSlider">Green</label>
+    </div>
+    <div>
+        <input type="range" id="blueSlider" class="slider" min="0" max="255">
+        <label for="blueSlider">Blue</label>
+    </div>
+    <div id="userColor"></div>
+    <p id="resultText"></p>
+    <button onclick="checkColor()">Check Color</button>
+
+    <script>
+        let targetColor = {
+            r: Math.floor(Math.random() * 256),
+            g: Math.floor(Math.random() * 256),
+            b: Math.floor(Math.random() * 256)
+        };
+
+        document.getElementById('targetColor').style.backgroundColor = `rgb(${targetColor.r}, ${targetColor.g}, ${targetColor.b})`;
+
+        function updateUserColor() {
+            let r = document.getElementById('redSlider').value;
+            let g = document.getElementById('greenSlider').value;
+            let b = document.getElementById('blueSlider').value;
+            document.getElementById('userColor').style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+        }
+
+        document.getElementById('redSlider').addEventListener('input', updateUserColor);
+        document.getElementById('greenSlider').addEventListener('input', updateUserColor);
+        document.getElementById('blueSlider').addEventListener('input', updateUserColor);
+
+        function checkColor() {
+            let r = document.getElementById('redSlider').value;
+            let g = document.getElementById('greenSlider').value;
+            let b = document.getElementById('blueSlider').value;
+
+            let diff = Math.abs(targetColor.r - r) + Math.abs(targetColor.g - g) + Math.abs(targetColor.b - b);
+
+            let resultText = `Difference: ${diff}`;
+            if (diff === 0) {
+                resultText = "Perfect Match!";
+            }
+            document.getElementById('resultText').innerText = resultText;
+        }
+    </script>
+</body>
+</html>
